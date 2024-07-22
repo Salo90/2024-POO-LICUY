@@ -42,7 +42,7 @@ def mostrar_menu():
             print(f"{key} - {unidades[key]}")
         print("0 - Salir")
 
-        eleccion_unidad = input("Elige una o varias unidades separadas por comas o '0' para salir: ")
+        eleccion_unidad = input("Elige una unidades '0' para salir: ")
         if eleccion_unidad == '0':
             print("Saliendo del programa.")
             break
