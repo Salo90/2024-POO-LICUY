@@ -1,6 +1,7 @@
 from inventario import Inventario
 from producto import Producto
 
+# Muestra el menú principal de opciones al usuario.
 def menu():
     print("\n--- Sistema de Gestión de Inventarios ---")
     print("1. Añadir nuevo producto")
@@ -10,6 +11,7 @@ def menu():
     print("5. Mostrar todos los productos")
     print("6. Salir")
 
+ # Función principal que maneja la interacción con el usuario.
 def main():
     inventario = Inventario()
 
@@ -50,7 +52,7 @@ def main():
             inventario.mostrar_productos()
 
         elif opcion == "6":
-            print("¡Hasta luego!")
+            print("¡Gracias por visitar!")
             break
 
         else:

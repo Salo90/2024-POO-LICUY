@@ -1,0 +1,6 @@
+001,arroz,69,1.52
+003,mantequilla,23,0.35
+011,arroz conejo,56,0.95
+013,sardina real,630,3.8
+014,escoba,58,2.65
+002,esoba,255,2.85
