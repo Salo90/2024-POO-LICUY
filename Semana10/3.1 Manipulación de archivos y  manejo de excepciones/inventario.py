@@ -242,9 +242,7 @@ def main():
                 else:
                     print("Criterio no válido. Por favor, ingrese 'id' o 'nombre'.")
                     continue
-
                 break
-
 
         elif opcion == "4":
             while True:
