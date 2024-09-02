@@ -1,4 +1,5 @@
 import os
+import json
 
 class Producto:
     def __init__(self, id_producto, nombre, cantidad, precio):
@@ -10,42 +11,58 @@ class Producto:
     def __str__(self):
         return f"ID: {self.id_producto}, Nombre: {self.nombre}, Cantidad: {self.cantidad}, Precio: {self.precio}"
 
+    def to_dict(self):
+        """Convierte el objeto Producto en un diccionario."""
+        return {
+            "id_producto": self.id_producto,
+            "nombre": self.nombre,
+            "cantidad": self.cantidad,
+            "precio": self.precio
+        }
+
     @staticmethod
-    def from_string(producto_str):
-        id_producto, nombre, cantidad, precio = producto_str.strip().split(",")
-        return Producto(id_producto, nombre, int(cantidad), float(precio))
+    def from_dict(producto_dict):
+        """Crea un objeto Producto desde un diccionario."""
+        return Producto(
+            producto_dict["id_producto"],
+            producto_dict["nombre"],
+            producto_dict["cantidad"],
+            producto_dict["precio"]
+        )
 
 class Inventario:
-    def __init__(self, archivo="inventario.txt"):
+    def __init__(self, archivo="inventario.json"):
         self.archivo = archivo
         self.productos = {}
         self.cargar_inventario()
 
     def cargar_inventario(self):
-        """Cargar productos desde el archivo de inventario."""
+        """Cargar productos desde el archivo de inventario en formato JSON."""
         if not os.path.exists(self.archivo):
             print(f"Archivo {self.archivo} no encontrado. Se creará uno nuevo.")
             return
 
         try:
             with open(self.archivo, "r") as file:
-                for linea in file:
-                    producto = Producto.from_string(linea)
-                    self.productos[producto.id_producto] = producto
+                data = json.load(file)
+                for id_producto, producto_dict in data.items():
+                    producto = Producto.from_dict(producto_dict)
+                    self.productos[id_producto] = producto
             print(f"Inventario cargado exitosamente desde {self.archivo}.")
         except FileNotFoundError:
             print(f"Error: El archivo {self.archivo} no existe.")
         except PermissionError:
             print(f"Error: No tienes permiso para leer el archivo {self.archivo}.")
+        except json.JSONDecodeError:
+            print(f"Error: El archivo {self.archivo} no está en un formato JSON válido.")
         except Exception as e:
             print(f"Error inesperado al cargar el inventario: {e}")
 
     def guardar_inventario(self):
-        """Guardar los productos actuales en el archivo de inventario."""
+        """Guardar los productos actuales en el archivo de inventario en formato JSON."""
         try:
             with open(self.archivo, "w") as file:
-                for producto in self.productos.values():
-                    file.write(f"{producto.id_producto},{producto.nombre},{producto.cantidad},{producto.precio}\n")
+                json.dump({id_producto: producto.to_dict() for id_producto, producto in self.productos.items()}, file, indent=4)
             print(f"Inventario guardado exitosamente en {self.archivo}.")
         except PermissionError:
             print(f"Error: No tienes permiso para escribir en el archivo {self.archivo}.")
