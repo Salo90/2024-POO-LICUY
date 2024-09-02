@@ -1,0 +1,14 @@
+{
+    "001": {
+        "id_producto": "001",
+        "nombre": "Tallarin sumesa",
+        "cantidad": 220,
+        "precio": 1.8
+    },
+    "002": {
+        "id_producto": "002",
+        "nombre": "Arroz",
+        "cantidad": 600,
+        "precio": 0.6
+    }
+}
